@@ -21,7 +21,7 @@ class Home extends StatelessWidget {
         builder: (ctxt) => FloatingActionButton(
             child: Icon(Icons.add),
             onPressed: () {
-              showBottomSheet(
+              showModalBottomSheet(
                   context: ctxt,
                   builder: (ctxt) => Scaffold(
                         appBar: AppBar(),
