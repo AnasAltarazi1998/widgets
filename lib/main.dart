@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widgets/home.dart';
+import 'package:widgets/profile.dart';
 
 void main() {
   runApp(MyApp());
