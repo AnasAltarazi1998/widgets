@@ -1,104 +1,138 @@
 import 'package:flutter/material.dart';
-import 'package:widgets/home.dart';
-import 'package:widgets/profile.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/home',
-      routes: {'/home': (_) => Home()},
-      darkTheme: ThemeData(
-        primaryColor: Colors.indigo.shade300,
-      ),
-      theme: ThemeData(
-          primaryColor: Colors.indigo,
-          primarySwatch: Colors.indigo,
-          bottomAppBarColor: Colors.indigo,
-          iconTheme: IconThemeData(color: Colors.white),
-          floatingActionButtonTheme:
-              FloatingActionButtonThemeData(backgroundColor: Colors.black)),
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      home: MyHomePage(),
+      theme: _buildShrineTheme(),
     );
   }
 }
 
-// import 'package:flutter/material.dart';
+class MyHomePage extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 112.0),
+          child: ListView.builder(
+            itemCount: 5,
+            itemBuilder: (context, index) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 80.0),
+              child: Container(
+                color: Colors.indigo,
+                width: MediaQuery.of(context).size.width,
+                height: 150,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 150,
+          child: SafeArea(
+            child: MaterialBanner(
+              content: const Text('Error message text'),
+              leading: CircleAvatar(child: Icon(Icons.delete)),
+              actions: [
+                TextButton(
+                  child: const Text('ACTION 1'),
+                  onPressed: () {},
+                ),
+                TextButton(
+                  child: const Text('ACTION 2'),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
+        ),
+      ]),
+    );
+  }
+}
 
-// void main() {
-//   runApp(MyApp());
-// }
+ThemeData _buildShrineTheme() {
+  final ThemeData base = ThemeData.light();
+  return base.copyWith(
+    colorScheme: _shrineColorScheme,
+    toggleableActiveColor: shrinePink400,
+    accentColor: shrineBrown900,
+    primaryColor: shrinePink100,
+    primaryColorLight: shrinePink100,
+    buttonColor: shrinePink100,
+    scaffoldBackgroundColor: shrineBackgroundWhite,
+    cardColor: shrineBackgroundWhite,
+    textSelectionColor: shrinePink100,
+    errorColor: shrineErrorRed,
+    buttonTheme: ButtonThemeData(
+      colorScheme: _shrineColorScheme.copyWith(primary: shrinePink400),
+      textTheme: ButtonTextTheme.normal,
+    ),
+    primaryIconTheme: _customIconTheme(base.iconTheme),
+    textTheme: _buildShrineTextTheme(base.textTheme),
+    primaryTextTheme: _buildShrineTextTheme(base.primaryTextTheme),
+    accentTextTheme: _buildShrineTextTheme(base.accentTextTheme),
+    iconTheme: _customIconTheme(base.iconTheme),
+  );
+}
 
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Standard Bottom Sheet Demo',
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(
-//         colorScheme: Theme.of(context).colorScheme.copyWith(
-//               primary: Color(0xFF6200EE),
-//             ),
-//       ),
-//       home: Scaffold(
-//         // Use a Builder to get a context within the Scaffold.
-//         body: Builder(
-//           builder: (ctxt) {
-//             return Center(
-//               child: TextButton(
-//                 child: Text('SHOW BOTTOM SHEET'),
-//                 onPressed: () {
-//                   showBottomSheet(
-//                     context: ctxt,
-//                     builder: (context) {
-//                       final theme = Theme.of(context);
-//                       // Using Wrap makes the bottom sheet height the height of the content.
-//                       // Otherwise, the height will be half the height of the screen.
-//                       return Scaffold(
-//                         appBar: AppBar(),
-//                         body: Wrap(
-//                           children: [
-//                             ListTile(
-//                               leading: Icon(
-//                                 Icons.home,
-//                                 color: Colors.white,
-//                               ),
-//                               title: Text(
-//                                 'Header',
-//                                 style: theme.textTheme.subtitle1.copyWith(
-//                                     color: theme.colorScheme.onPrimary),
-//                               ),
-//                               tileColor: theme.colorScheme.primary,
-//                             ),
-//                             ListTile(
-//                               title: Text('Title 1'),
-//                             ),
-//                             ListTile(
-//                               title: Text('Title 2'),
-//                             ),
-//                             ListTile(
-//                               title: Text('Title 3'),
-//                             ),
-//                             ListTile(
-//                               title: Text('Title 4'),
-//                             ),
-//                             ListTile(
-//                               title: Text('Title 5'),
-//                             ),
-//                           ],
-//                         ),
-//                       );
-//                     },
-//                   );
-//                 },
-//               ),
-//             );
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }
+IconThemeData _customIconTheme(IconThemeData original) {
+  return original.copyWith(color: shrineBrown900);
+}
+
+TextTheme _buildShrineTextTheme(TextTheme base) {
+  return base
+      .copyWith(
+        caption: base.caption.copyWith(
+          fontWeight: FontWeight.w400,
+          fontSize: 14,
+          letterSpacing: defaultLetterSpacing,
+        ),
+        button: base.button.copyWith(
+          fontWeight: FontWeight.w500,
+          fontSize: 14,
+          letterSpacing: defaultLetterSpacing,
+        ),
+      )
+      .apply(
+        fontFamily: 'Rubik',
+        displayColor: shrineBrown900,
+        bodyColor: shrineBrown900,
+      );
+}
+
+const ColorScheme _shrineColorScheme = ColorScheme(
+  primary: shrinePink100,
+  primaryVariant: shrineBrown900,
+  secondary: shrinePink50,
+  secondaryVariant: shrineBrown900,
+  surface: shrineSurfaceWhite,
+  background: shrineBackgroundWhite,
+  error: shrineErrorRed,
+  onPrimary: shrineBrown900,
+  onSecondary: shrineBrown900,
+  onSurface: shrineBrown900,
+  onBackground: shrineBrown900,
+  onError: shrineSurfaceWhite,
+  brightness: Brightness.light,
+);
+
+const Color shrinePink50 = Color(0xFFFEEAE6);
+const Color shrinePink100 = Color(0xFFFEDBD0);
+const Color shrinePink300 = Color(0xFFFBB8AC);
+const Color shrinePink400 = Color(0xFFEAA4A4);
+
+const Color shrineBrown900 = Color(0xFF442B2D);
+const Color shrineBrown600 = Color(0xFF7D4F52);
+
+const Color shrineErrorRed = Color(0xFFC5032B);
+
+const Color shrineSurfaceWhite = Color(0xFFFFFBFA);
+const Color shrineBackgroundWhite = Colors.white;
+
+const defaultLetterSpacing = 0.03;
