@@ -17,41 +17,187 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 112.0),
-          child: ListView.builder(
-            itemCount: 5,
-            itemBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 80.0),
-              child: Container(
-                color: Colors.indigo,
-                width: MediaQuery.of(context).size.width,
-                height: 150,
+      body: Builder(
+        builder: (ctxt) => Stack(children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 112.0),
+            child: ListView.builder(
+              itemCount: 5,
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.symmetric(vertical: 80.0),
+                child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                        context: ctxt,
+                        builder: (ctxt2) => Scaffold(
+                              appBar: AppBar(
+                                title: Text('data'),
+                              ),
+                              body: Center(
+                                child: Text('card number $index'),
+                              ),
+                            ));
+                  },
+                  child: Card(
+                    shadowColor: Colors.brown,
+                    borderOnForeground: true,
+                    color: Colors.grey.shade400,
+                    elevation: 10,
+                    clipBehavior: Clip.antiAlias,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                            height: 250,
+                            child: Image.asset(
+                              'assets/img.jpg',
+                              width: double.infinity,
+                              fit: BoxFit.fill,
+                            )),
+                        ListTile(
+                          leading: Icon(Icons.arrow_drop_down_circle),
+                          title: const Text('Card title 1'),
+                          subtitle: Text(
+                            'Secondary Text',
+                            style:
+                                TextStyle(color: Colors.black.withOpacity(0.6)),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            'Greyhound divisively hello coldly wonderfully marginally far upon excluding.',
+                            style:
+                                TextStyle(color: Colors.black.withOpacity(0.6)),
+                          ),
+                        ),
+                        ButtonBar(
+                          alignment: MainAxisAlignment.start,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                // Perform some action
+                              },
+                              child: const Text('ACTION 1'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                // Perform some action
+                              },
+                              child: const Text('ACTION 2'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-        SizedBox(
-          height: 150,
-          child: SafeArea(
-            child: MaterialBanner(
-              content: const Text('Error message text'),
-              leading: CircleAvatar(child: Icon(Icons.delete)),
-              actions: [
-                TextButton(
-                  child: const Text('ACTION 1'),
-                  onPressed: () {},
-                ),
-                TextButton(
-                  child: const Text('ACTION 2'),
-                  onPressed: () {},
-                ),
-              ],
+          SizedBox(
+            height: 150,
+            child: SafeArea(
+              child: MaterialBanner(
+                content: const Text('Error message text'),
+                leading: CircleAvatar(child: Icon(Icons.delete)),
+                actions: [
+                  TextButton(
+                    child: const Text('ACTION 1'),
+                    onPressed: () {
+                      showDialog(
+                        context: ctxt,
+                        builder: (ctxt1) => AlertDialog(
+                          title: Text('Reset settings?'),
+                          content: Text(
+                              'This will reset your device to its default factory settings.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(ctxt1);
+                              },
+                              child: Text('CANCEL'),
+                            ),
+                            TextButton(
+                              onPressed: () {},
+                              child: Text('ACCEPT'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                  TextButton(
+                    child: const Text('ACTION 2'),
+                    onPressed: () {
+                      Future<String> value = showDialog(
+                        context: ctxt,
+                        builder: (ctxt1) => SimpleDialog(
+                          title: Text('Set backup account'),
+                          children: [
+                            SimpleDialogItem(
+                              icon: Icons.account_circle,
+                              color: Colors.orange,
+                              text: 'user01@gmail.com',
+                              onPressed: () {
+                                Navigator.pop(ctxt1, 'user01@gmail.com');
+                              },
+                            ),
+                            SimpleDialogItem(
+                              icon: Icons.account_circle,
+                              color: Colors.green,
+                              text: 'user02@gmail.com',
+                              onPressed: () {
+                                Navigator.pop(ctxt1, 'user02@gmail.com');
+                              },
+                            ),
+                            SimpleDialogItem(
+                              icon: Icons.add_circle,
+                              color: Colors.grey,
+                              text: 'Add account',
+                              onPressed: () {
+                                Navigator.pop(context, 'user02@gmail.com');
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ]),
+        ]),
+      ),
+    );
+  }
+}
+
+class SimpleDialogItem extends StatelessWidget {
+  const SimpleDialogItem(
+      {Key key, this.icon, this.color, this.text, this.onPressed})
+      : super(key: key);
+
+  final IconData icon;
+  final Color color;
+  final String text;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialogOption(
+      onPressed: onPressed,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(icon, size: 36.0, color: color),
+          Padding(
+            padding: const EdgeInsetsDirectional.only(start: 16.0),
+            child: Text(text),
+          ),
+        ],
+      ),
     );
   }
 }
