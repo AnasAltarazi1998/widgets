@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({
     Key key,
   }) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  List<bool> checked = [true, true, false, false, true];
+  int _value = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +51,54 @@ class Home extends StatelessWidget {
       ),
       body: Container(
         alignment: Alignment.center,
-        child: MaterialButton(
-          onPressed: () {},
-          child: Text(
-            'text',
-            textDirection: TextDirection.ltr,
-          ),
+        child: Column(
+          children: [
+            for (var i = 0; i < 5; i += 1)
+              Row(
+                children: [
+                  Checkbox(
+                    onChanged: i == 4
+                        ? null
+                        : (bool value) {
+                            setState(() {
+                              checked[i] = value;
+                            });
+                          },
+                    tristate: i == 2,
+                    value: checked[i],
+                    activeColor: Color(0xFF6200EE),
+                  ),
+                  Text(
+                    'Checkbox ${i + 1}',
+                    style: Theme.of(context).textTheme.subtitle1.copyWith(
+                        color: i == 4 ? Colors.black38 : Colors.black),
+                  ),
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+              ),
+            for (int i = 1; i <= 5; i++)
+              ListTile(
+                title: Text(
+                  'Radio $i',
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1
+                      .copyWith(color: i == 5 ? Colors.black38 : Colors.black),
+                ),
+                leading: Radio(
+                  value: i,
+                  groupValue: _value,
+                  activeColor: Color(0xFF6200EE),
+                  onChanged: i == 5
+                      ? null
+                      : (int value) {
+                          setState(() {
+                            _value = value;
+                          });
+                        },
+                ),
+              ),
+          ],
         ),
       ),
     );
