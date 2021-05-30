@@ -41,7 +41,7 @@ class MyHomePage extends StatelessWidget {
                   child: Card(
                     shadowColor: Colors.brown,
                     borderOnForeground: true,
-                    color: Colors.grey.shade400,
+                    color: Colors.grey.shade300,
                     elevation: 10,
                     clipBehavior: Clip.antiAlias,
                     child: Column(
