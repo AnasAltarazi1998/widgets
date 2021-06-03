@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:widgets/home.dart';
 import 'package:widgets/profile.dart';
 
-void main() {
+main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       initialRoute: '/home',
       routes: {'/home': (_) => Home(), '/profile': (_) => Profile()},
-      darkTheme: ThemeData(
-        primaryColor: Colors.indigo.shade300,
-      ),
-      theme:
-          ThemeData(primaryColor: Colors.indigo, primarySwatch: Colors.indigo),
     );
   }
 }
