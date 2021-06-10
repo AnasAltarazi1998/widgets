@@ -167,10 +167,10 @@
       "name": "widgets",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "2.7"
+      "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-06-03T13:11:40.250900Z",
+  "generated": "2021-06-10T14:26:31.697875Z",
   "generator": "pub",
   "generatorVersion": "2.13.0"
 }
