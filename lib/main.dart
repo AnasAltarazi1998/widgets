@@ -13,6 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      theme:
+          ThemeData(primaryColor: Colors.indigo, primarySwatch: Colors.indigo),
       initialRoute: '/home',
       routes: {'/home': (_) => Home(), '/profile': (_) => Profile()},
     );
